@@ -7,13 +7,13 @@ class TController extends ParentController
     private \bot\TModel $TModel;
     public function __construct()
     {
+        parent::__construct();
         $this->TModel = new TModel();
-        $this->processMessages();
+        parent::processMessages();
+        //$this->processMessages();
         $this->processResponses();
 
     }
-
-
 
     public function processResponses()
     {

@@ -4,15 +4,16 @@ use bot\ParentController;
 use bot\WeatherModel;
 class ControllerWeather extends ParentController
 {
-    private \bot\weatherModel $weatherModel;
+    private \bot\WeatherModel $weatherModel;
 
     public function __construct()
     {
+        parent::__construct();
         $this->weatherModel = new weatherModel();
         $this->processMessages();
+        //parent::processMessages();
         $this->processRequests();
     }
-
     public function processRequests()
     {
         $requests = $this->weatherModel->fromTable('in_messages', 'chat_id', 'requests', 'message_id, ready_requests, marker');

@@ -19,7 +19,7 @@ class ParentController
             $messageId = $value['message_id'];
             //$chatId[] = $value['chat_id'];
             $message = json_encode($value['message']);
-            if ($message = "Какая погода?") {
+            if ($message = "What's the weather like?") {
                 $marker = 2;
             } else {
                 $marker = 1;
