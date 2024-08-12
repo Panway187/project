@@ -1,7 +1,8 @@
 <?php
 namespace bot;
+use bot\ParentController;
 use bot\TModel;
-class RequestController
+class TController extends ParentController
 {
     private \bot\TModel $TModel;
     public function __construct()
@@ -12,25 +13,11 @@ class RequestController
 
     }
 
-    public function processMessages()
-    {
-        $messages = $this->TModel->fromTable('in_messages');
-        foreach ($messages as  $value) {
-            $messageId = $value['message_id'];
-            //$chatId[] = $value['chat_id'];
-            $message = json_encode($value['message']);
-            $params = [
-                'message_id' => $messageId,
-                'ready_requests' => $message
-            ];
-            $this->TModel->toTable('requests', $params);
-            $this->TModel->changeProcessed($messageId, 'in_messages');
-        }
-    }
+
 
     public function processResponses()
     {
-        $response = $this->TModel->fromTable('responses');
+        $response = $this->TModel->fromTable('in_messages', 'chat_id', 'responses', 'message_id`, `response');
         foreach ($response as  $value) {
             $messageId = $value['message_id'];
             $chatId = $value['chat_id'];
