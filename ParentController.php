@@ -18,7 +18,7 @@ class ParentController
         foreach ($messages as $value) {
             $messageId = $value['message_id'];
             //$chatId[] = $value['chat_id'];
-            $message = json_encode($value['message']);
+            $message = $value['message'];
             if ($message = "What's the weather like?") {
                 $marker = 2;
             } else {

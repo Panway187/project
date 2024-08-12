@@ -16,7 +16,14 @@ class ControllerWeather extends ParentController
     }
     public function processRequests()
     {
-        $requests = $this->weatherModel->fromTable('in_messages', 'chat_id', 'requests', 'message_id, ready_requests, marker');
+        $requests = $this->weatherModel->fromTable(
+            'in_messages',
+            'chat_id',
+            'requests',
+            'message_id, 
+            ready_requests, 
+            marker'
+        );
         foreach ($requests as $value) {
             $marker = $value['marker'];
             if ($marker == 2) {

@@ -21,11 +21,11 @@ class ParentModel
     {
         if ($table === 'in_messages' || $table === 'requests'){
             $sql = "SELECT  " . $column . " FROM " . $table . " WHERE processed=0";
-        }elseif ($table2 === 'responses'){
+        } elseif ($table2 === 'responses'){
             $sql = "SELECT " . $table . "." . $column . ", " . $table2 . "." . $column2 ." 
                     FROM " . $table . " JOIN " . $table2 . " ON " . $table2 . ".`message_id` = " . $table . ".`message_id` 
                     WHERE " . $table2 . ".`processed`=0";
-        }else{
+        } else {
             die("Connection failed: " . $this->dbLink->connect_error);
         }
         $answer = $this->dbLink->query($sql);
@@ -45,7 +45,7 @@ class ParentModel
         }, $values);
         $columns = implode(',', $columns); //перевод в строку
         $values = implode(',', $values);
-        $sql = "INSERT INTO " . $table . "(" . $columns . ") VALUES (" . $values . ")";
+        $sql = "INSERT INTO " . $table . " (" . $columns . ") VALUES (" . $values . ")";
         $this->dbLink->query($sql);
     }
     public function changeProcessed(int $messageId, string $table):void
