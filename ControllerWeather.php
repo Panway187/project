@@ -1,10 +1,8 @@
 <?php
 namespace bot;
-use bot\ParentController;
-use bot\WeatherModel;
 class ControllerWeather extends ParentController
 {
-    private \bot\WeatherModel $weatherModel;
+    private WeatherModel $weatherModel;
 
     public function __construct()
     {
@@ -16,7 +14,7 @@ class ControllerWeather extends ParentController
     }
     public function processRequests()
     {
-        $requests = $this->weatherModel->fromTable(
+        $requests = $this->weatherModel->fromResponses(
             'in_messages',
             'chat_id',
             'requests',
@@ -26,14 +24,15 @@ class ControllerWeather extends ParentController
         );
         foreach ($requests as $value) {
             $marker = $value['marker'];
+            $messageId = $value['message_id'];
+            $answer = ['good', 'normal', 'bad'];
+            $key = array_rand($answer, 1);
+            $message = $answer[$key];
             if ($marker == 2) {
-                $messageId = $value['message_id'];
-                $chatId = $value['chat_id'];
-                $ready_requests = $value['ready_requests'];
                 $params = [
-                    'message_id' => $messageId,
-                    'message' => $ready_requests,
-                    'chatId' => $chatId,
+                    'message_id' => $value['message_id'],
+                    'message' => $message,
+                    'chat_id' => $value['chat_id'],
                 ];
                 $this->weatherModel->toTable('out_messages', $params);
                 $this->weatherModel->changeProcessed($messageId, 'requests');

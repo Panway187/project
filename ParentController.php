@@ -2,9 +2,9 @@
 namespace bot;
 //use bot\ParentModel;
 
-class ParentController
+abstract class ParentController
 {
-    private \bot\ParentModel $ParentModel;
+    private ParentModel $ParentModel;
 
     public function __construct()
     {
@@ -19,14 +19,14 @@ class ParentController
             $messageId = $value['message_id'];
             //$chatId[] = $value['chat_id'];
             $message = $value['message'];
-            if ($message = "What's the weather like?") {
+            if ($message == "What's the weather like?") {
                 $marker = 2;
             } else {
                 $marker = 1;
             }
             $params = [
                 'message_id' => $messageId,
-                'ready_requests' => $message,
+                'ready_requests' => addslashes($message),
                 'marker' => $marker
             ];
             $this->ParentModel->toTable('requests', $params);
